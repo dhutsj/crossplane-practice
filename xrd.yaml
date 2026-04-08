@@ -1,0 +1,35 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: nosqls.database.example.com
+spec:
+  scope: Namespaced
+  group: database.example.com
+  names:
+    kind: NoSQL
+    plural: nosqls
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              location:
+                type: string
+                oneOf:
+                  - pattern: '^EU$'
+                  - pattern: '^US$'
+              s3_bucket_name:
+                type: string
+              dynamodb_table_name:
+                type: string
+            required:
+              - location
+              - s3_bucket_name
+              - dynamodb_table_name
+
+    served: true
+    referenceable: true
