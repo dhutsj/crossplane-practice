@@ -1,0 +1,53 @@
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  # annotations:
+  #   crossplane.io/external-name: tsj-test-crossplane-s3-bucket
+  labels:
+    testing.upbound.io/example-name: example
+  name: tsj-test-crossplane-s3-bucket
+  namespace: crossplane-test
+spec:
+  forProvider:
+    region: us-west-2
+    forceDestroy: true
+    tags: {"owner": "tsj", "created_by": "crossplane"}
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketPublicAccessBlock
+metadata:
+  annotations:
+    meta.upbound.io/example-id: s3/v1beta1/bucketpublicaccessblock
+    # crossplane.io/external-name: example-bpab
+  labels:
+    testing.upbound.io/example-name: example
+  name: example-bpab
+  namespace: crossplane-test
+spec:
+  forProvider:
+    blockPublicAcls: true
+    ignorePublicAcls: true
+    blockPublicPolicy: true
+    restrictPublicBuckets: true
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    region: us-west-2
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketVersioning
+metadata:
+  annotations:
+    meta.upbound.io/example-id: s3/v1beta2/bucketversioning
+  labels:
+    testing.upbound.io/example-name: versioning_example
+  name: versioning-example
+  namespace: crossplane-test
+spec:
+  forProvider:
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    region: us-west-2
+    versioningConfiguration:
+      status: Enabled
