@@ -1,0 +1,9 @@
+apiVersion: database.example.com/v1alpha1
+kind: NoSQL
+metadata:
+  name: my-database-and-s3-bucket
+  namespace: crossplane-test
+spec:
+  location: "US"
+  s3_bucket_name: "tsj-test-crossplane-api-schema"
+  dynamodb_table_name: "tsj-test-crossplane-api-schema"
