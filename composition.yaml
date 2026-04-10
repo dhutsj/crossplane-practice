@@ -24,6 +24,7 @@ spec:
             spec:
               forProvider:
                 region: us-west-2
+                tags: {"owner": "tsj", "created_by": "crossplane"}
           patches:
             - type: FromCompositeFieldPath
               fromFieldPath: "spec.location"
