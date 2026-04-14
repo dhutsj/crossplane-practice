@@ -1,0 +1,312 @@
+# VPC
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: VPC
+metadata:
+  name: new-account-vpc
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    cidrBlock: 10.80.0.0/16
+    enableDnsSupport: true
+    enableDnsHostNames: true
+    tags:
+      - key: Name
+        value: new-account-vpc
+  providerConfigRef:
+    name: default
+---
+# Internet Gateway
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: InternetGateway
+metadata:
+  name: new-account-igw
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    vpcIdRef:
+      name: new-account-vpc
+    tags:
+      - key: Name
+        value: new-account-igw
+  providerConfigRef:
+    name: default
+---
+# Public Subnet 1 (us-west-2a)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-public-subnet-1
+  labels:
+    app: new-account-vpc
+    access: public
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2a
+    cidrBlock: 10.80.0.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: true
+    tags:
+      - key: Name
+        value: new-account-public-subnet-1
+  providerConfigRef:
+    name: default
+---
+# Public Subnet 2 (us-west-2b)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-public-subnet-2
+  labels:
+    app: new-account-vpc
+    access: public
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2b
+    cidrBlock: 10.80.1.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: true
+    tags:
+      - key: Name
+        value: new-account-public-subnet-2
+  providerConfigRef:
+    name: default
+---
+# Public Subnet 3 (us-west-2c)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-public-subnet-3
+  labels:
+    app: new-account-vpc
+    access: public
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2c
+    cidrBlock: 10.80.2.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: true
+    tags:
+      - key: Name
+        value: new-account-public-subnet-3
+  providerConfigRef:
+    name: default
+---
+# Public Subnet 4 (us-west-2d)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-public-subnet-4
+  labels:
+    app: new-account-vpc
+    access: public
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2d
+    cidrBlock: 10.80.3.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: true
+    tags:
+      - key: Name
+        value: new-account-public-subnet-4
+  providerConfigRef:
+    name: default
+---
+# Private Subnet 1 (us-west-2a)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-private-subnet-1
+  labels:
+    app: new-account-vpc
+    access: private
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2a
+    cidrBlock: 10.80.10.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: false
+    tags:
+      - key: Name
+        value: new-account-private-subnet-1
+  providerConfigRef:
+    name: default
+---
+# Private Subnet 2 (us-west-2b)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-private-subnet-2
+  labels:
+    app: new-account-vpc
+    access: private
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2b
+    cidrBlock: 10.80.11.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: false
+    tags:
+      - key: Name
+        value: new-account-private-subnet-2
+  providerConfigRef:
+    name: default
+---
+# Private Subnet 3 (us-west-2c)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-private-subnet-3
+  labels:
+    app: new-account-vpc
+    access: private
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2c
+    cidrBlock: 10.80.12.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: false
+    tags:
+      - key: Name
+        value: new-account-private-subnet-3
+  providerConfigRef:
+    name: default
+---
+# Private Subnet 4 (us-west-2d)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: new-account-private-subnet-4
+  labels:
+    app: new-account-vpc
+    access: private
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2d
+    cidrBlock: 10.80.13.0/24
+    vpcIdRef:
+      name: new-account-vpc
+    mapPublicIpOnLaunch: false
+    tags:
+      - key: Name
+        value: new-account-private-subnet-4
+  providerConfigRef:
+    name: default
+---
+# Elastic IP for NAT Gateway
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Address
+metadata:
+  name: new-account-nat-eip
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    domain: vpc
+    tags:
+      - key: Name
+        value: new-account-nat-eip
+  providerConfigRef:
+    name: default
+---
+# NAT Gateway (in public-subnet-1 / us-west-2a)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: NATGateway
+metadata:
+  name: new-account-nat-gw
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    connectivityType: public
+    allocationIdRef:
+      name: new-account-nat-eip
+    subnetIdRef:
+      name: new-account-public-subnet-1
+    tags:
+      - key: Name
+        value: new-account-nat-gw
+  providerConfigRef:
+    name: default
+---
+# Public Route Table (routes all public subnets to IGW)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: RouteTable
+metadata:
+  name: new-account-public-rt
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    vpcIdRef:
+      name: new-account-vpc
+    routes:
+      - destinationCidrBlock: 0.0.0.0/0
+        gatewayIdRef:
+          name: new-account-igw
+    associations:
+      - subnetIdRef:
+          name: new-account-public-subnet-1
+      - subnetIdRef:
+          name: new-account-public-subnet-2
+      - subnetIdRef:
+          name: new-account-public-subnet-3
+      - subnetIdRef:
+          name: new-account-public-subnet-4
+    tags:
+      - key: Name
+        value: new-account-public-rt
+  providerConfigRef:
+    name: default
+---
+# Private Route Table (routes all private subnets to NAT GW)
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: RouteTable
+metadata:
+  name: new-account-private-rt
+  labels:
+    app: new-account-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    vpcIdRef:
+      name: new-account-vpc
+    routes:
+      - destinationCidrBlock: 0.0.0.0/0
+        natGatewayIdRef:
+          name: new-account-nat-gw
+    associations:
+      - subnetIdRef:
+          name: new-account-private-subnet-1
+      - subnetIdRef:
+          name: new-account-private-subnet-2
+      - subnetIdRef:
+          name: new-account-private-subnet-3
+      - subnetIdRef:
+          name: new-account-private-subnet-4
+    tags:
+      - key: Name
+        value: new-account-private-rt
+  providerConfigRef:
+    name: default
