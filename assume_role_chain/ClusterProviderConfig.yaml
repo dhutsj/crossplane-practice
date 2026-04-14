@@ -1,0 +1,9 @@
+apiVersion: aws.m.upbound.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: staging-account
+spec:
+  credentials:
+    source: IRSA
+  assumeRoleChain:
+    - roleARN: arn:aws:iam::${aws_account_b}:role/crossplane_sa_aws_provider
