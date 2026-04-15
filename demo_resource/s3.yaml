@@ -13,7 +13,7 @@ spec:
   forProvider:
     region: us-west-2
     forceDestroy: true
-    tags: {"owner": "tsj", "created_by": "crossplane"}
+    tags: {"owner": "testtest", "created_by": "crossplane"}
 ---
 apiVersion: s3.aws.m.upbound.io/v1beta1
 kind: BucketPublicAccessBlock
