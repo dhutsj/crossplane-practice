@@ -10,6 +10,7 @@ metadata:
   name: tsj-test-crossplane-s3-bucket
   namespace: crossplane-test
 spec:
+  managementPolicies: ["Create", "Observe"]
   forProvider:
     region: us-west-2
     forceDestroy: true
